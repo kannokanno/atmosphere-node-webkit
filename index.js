@@ -1,6 +1,5 @@
 'use strict';
 
-$(function() {
 	var path = require('path');
 	var util = require('util');
 	var localStorage = localStorage || {};
@@ -60,18 +59,6 @@ $(function() {
 		});
 	})();
 
-	(function bind_timeline() {
-		$('#timeline').on('click', function() {
-			http.get(
-				make_path('messages/search'),
-				util.format('count=%d', 50)
-			)
-			.done(function(res) {
-				//console.log(JSON.parse(res));
-			});
-		});
-	})();
-
 	(function bind_search() {
 		$('#search').on('click', function() {
 			http.get(
@@ -85,7 +72,6 @@ $(function() {
 	})();
 
 	(function bind_send() {
-		// TODO error
 		$('#send').on('click', function() {
 			http.post(
 				make_path('/messages/send'),
@@ -96,4 +82,15 @@ $(function() {
 			});
 		});
 	})();
-});
+
+function timelineController($scope) {
+	http.post(make_path('auth/login'), '{"user_id": "bob", "password": "bob"}')
+	.done(function() {
+		http.get(make_path('messages/search'), util.format('count=%d', 50))
+		.done(function(res) {
+			$scope.$apply(function(){
+				$scope.messages = JSON.parse(res).results;
+			});
+		});
+	});
+}
