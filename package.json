@@ -1,16 +1,22 @@
 {
-  "name": "atmosphere",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.html",
-  "dependencies": {
-    "nodewebkit": "~0.8.5"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node_modules/nodewebkit/bin/nodewebkit",
-    "test": "test"
-  },
-  "author": "m-kanno",
-  "license": "MIT"
+	"name": "atmosphere",
+	"version": "0.1.0",
+	"description": "",
+	"main": "index.html",
+	"dependencies": {
+		"nodewebkit": "~0.8.5"
+	},
+	"devDependencies": {},
+	"scripts": {
+		"start": "node_modules/nodewebkit/bin/nodewebkit",
+		"test": "test"
+	},
+	"window": {
+		"title" : "atmosphere",
+		"width": 525,
+		"height": 800,
+		"toolbar": true
+	}
+	"author": "m-kanno",
+	"license": "MIT"
 }

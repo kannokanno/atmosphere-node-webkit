@@ -10,12 +10,11 @@
 			<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 	</head>
 	<body ng-app>
-
 		<section id="entrance">
 			<div id="login-form" class="container">
 				<form class="form-signin" role="form">
 					<h2 class="form-signin-heading">Please sign in</h2>
-					<input type="text" id="login-id" class="form-control" placeholder="id" required autofocus>
+					<input type="text" id="login-id" class="form-control" placeholder="ID" required autofocus>
 					<input type="password" id="login-password" class="form-control" placeholder="Password" required>
 					<button id="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 				</form>
@@ -23,20 +22,26 @@
 		</section>
 
 		<section id="content" style="display: none;">
-			<div ng-controller="timelineController">
-				<ul ng-repeat="message in messages">
-					<li>{{ message._id }}</li>
-				</ul>
-			</div>
+			<form id="search-form">
+				<input type="text" name="search" id="search-text" class="form-control" placeholder="Search keyword">
+				<button id="search" class="btn btn-info">検索</button>
+			</form>
 
 			<div id="send-form">
-				<textarea id="send-text" rows="10" cols="40" placeholder="hey"></textarea>
-				<button id="send">投稿</button>
+				<textarea id="send-text" class="form-control" rows="1" cols="40" placeholder="Say"></textarea>
+				<button id="send" class="btn btn-info">投稿</button>
 			</div>
 
-			<div id="search-form">
-				<input type="text" name="search" id="search-text" placeholder="search">
-				<button id="search">検索</button>
+			<div ng-controller="timelineController">
+				<div class="timeline" ng-repeat="message in messages">
+					<img class="avatar" src="https://pbs.twimg.com/profile_images/1182137709/profile_normal.png">
+					<div class="timeline-header">
+						<span class="message-by">{{ message.created_by }}</span>
+						<small class="message-at">{{ message.created_at }}</small>
+					</div>
+					<p class="message-body">{{ message.message }}</p>
+					<div class="cf"></div>
+				</div>
 			</div>
 		</section>
 

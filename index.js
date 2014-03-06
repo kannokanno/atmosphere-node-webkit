@@ -55,7 +55,6 @@
 				util.format('{"user_id": "%s", "password": "%s"}', $('#login-id').val(), $('#login-password').val())
 			)
 			.done(function(res) {
-				console.log(JSON.parse(res).session_id);
 				if (JSON.parse(res).session_id) {
 					$('#entrance').css('display', 'none');
 					$('#content').show();
