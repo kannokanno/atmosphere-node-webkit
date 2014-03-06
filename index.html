@@ -3,32 +3,43 @@
 	<head>
 			<meta charset="UTF-8">
 			<title>atmosphere</title>
+			<link rel="stylesheet" href="css/bootstrap.min.css">
+			<link rel="stylesheet" href="index.css">
+			<script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
+			<script type="text/javascript" src="lib/jquery.cookie.js"></script>
+			<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 	</head>
 	<body ng-app>
-		<div id="login-form">
-			<input type="text" id="login-id" placeholder="id">
-			<input type="text" id="login-password" placeholder="password">
-			<button id="login">ログイン</button>
-		</div>
 
-		<div ng-controller="timelineController">
-			<ul ng-repeat="message in messages">
-				<li>{{ message._id }}</li>
-			</ul>
-		</div>
+		<section id="entrance">
+			<div id="login-form" class="container">
+				<form class="form-signin" role="form">
+					<h2 class="form-signin-heading">Please sign in</h2>
+					<input type="text" id="login-id" class="form-control" placeholder="id" required autofocus>
+					<input type="password" id="login-password" class="form-control" placeholder="Password" required>
+					<button id="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+				</form>
+			</div>
+		</section>
 
-		<div id="send-form">
-			<textarea id="send-text" rows="10" cols="40" placeholder="hey"></textarea>
-			<button id="send">投稿</button>
-		</div>
+		<section id="content" style="display: none;">
+			<div ng-controller="timelineController">
+				<ul ng-repeat="message in messages">
+					<li>{{ message._id }}</li>
+				</ul>
+			</div>
 
-		<div id="search-form">
-			<input type="text" name="search" id="search-text" placeholder="search">
-			<button id="search">検索</button>
-		</div>
+			<div id="send-form">
+				<textarea id="send-text" rows="10" cols="40" placeholder="hey"></textarea>
+				<button id="send">投稿</button>
+			</div>
 
-		<script type="text/javascript" src="lib/jquery-2.0.3.min.js"></script>
-		<script type="text/javascript" src="lib/jquery.cookie.js"></script>
+			<div id="search-form">
+				<input type="text" name="search" id="search-text" placeholder="search">
+				<button id="search">検索</button>
+			</div>
+		</section>
+
 		<script type="text/javascript" src="lib/angular.min.js"></script>
 		<script type="text/javascript" src="index.js"></script>
 	</body>

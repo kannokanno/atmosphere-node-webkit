@@ -52,10 +52,15 @@
 		$('#login').on('click', function() {
 			http.post(
 				make_path('auth/login'),
-				util.format('{"user_id": "%s", "password": "%s"}',
-					$('#login-id').val(),
-					$('#login-password').val())
-			);
+				util.format('{"user_id": "%s", "password": "%s"}', $('#login-id').val(), $('#login-password').val())
+			)
+			.done(function(res) {
+				console.log(JSON.parse(res).session_id);
+				if (JSON.parse(res).session_id) {
+					$('#entrance').css('display', 'none');
+					$('#content').show();
+				}
+			});
 		});
 	})();
 
@@ -84,6 +89,7 @@
 	})();
 
 function timelineController($scope) {
+	// TODO タイミング
 	http.post(make_path('auth/login'), '{"user_id": "bob", "password": "bob"}')
 	.done(function() {
 		http.get(make_path('messages/search'), util.format('count=%d', 50))
