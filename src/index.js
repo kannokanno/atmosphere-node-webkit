@@ -15,7 +15,7 @@ var sessionId = {
 };
 
 function make_path(added) {
-  return path.join('https://atmos.interprism.co.jp/atmos/', added);
+  return path.join('https://atmos.interprism.co.jp/atmos-stg/', added);
 }
 
 var http = {
@@ -89,3 +89,28 @@ function SearchController($scope) {
     applyTimeline(http.get('messages/search', util.format('keywords=%s', $scope.keyword)));
   }
 }
+
+(function streaming() {
+  var sock = new SockJS('https://atmos.interprism.co.jp/atmos-stg-ws/notify');
+  sock.onopen = function() {
+    this.send(util.format('{"action":"start","atmosphere-session-id":"%s"}', sessionId.get()));
+  };
+
+  sock.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    if (typeof data.info !== "undefined") {
+      // TODO messgaes.pushだけで反映されて欲しいんだが
+      //      やり方が分からないのでとりあえず再取得
+      http.get('messages/search', util.format('count=%d', 50))
+      .done(function (res) {
+        var $scope = angular.element(('#timeline-controller')).scope();
+        $scope.$apply(function () {
+          $scope.messages = JSON.parse(res).results;
+        });
+      });
+    }
+  };
+
+  sock.onclose = function() {
+  };
+})();
