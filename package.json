@@ -1,22 +1,12 @@
 {
-    "name": "atmosphere",
-    "version": "0.1.0",
-    "description": "",
-    "main": "index.html",
-    "dependencies": {
-        "nodewebkit": "~0.8.5"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "start": "./node_modules/nodewebkit/bin/nodewebkit",
-        "test": "test"
-    },
-    "window": {
-        "title": "atmosphere",
-        "width": 570,
-        "height": 800,
-        "toolbar": false
-    },
+    "name": "build",
+    "version": "0.0.1",
+    "main": "src/index.html",
+    "description": "Using Grunt to build",
     "author": "m-kanno",
-    "license": "MIT"
+    "private": true,
+    "devDependencies": {
+        "grunt": "^0.4.2",
+        "grunt-node-webkit-builder": "^0.1.17"
+    }
 }
