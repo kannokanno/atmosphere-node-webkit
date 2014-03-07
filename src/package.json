@@ -1,0 +1,21 @@
+{
+  "name": "atmosphere",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.html",
+  "dependencies": {
+    "nodewebkit": "~0.8.5"
+  },
+  "scripts": {
+    "start": "./node_modules/nodewebkit/bin/nodewebkit",
+    "test": "test"
+  },
+  "window": {
+    "title": "atmosphere",
+    "width": 570,
+    "height": 800,
+    "toolbar": true
+  },
+  "author": "m-kanno",
+  "license": "MIT"
+}
