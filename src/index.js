@@ -50,7 +50,7 @@ var http = {
 function applyTimeline($promise) {
   $promise
     .done(function (res) {
-      var $scope = angular.element(('#timeline-controller')).scope();
+      var $scope = angular.element(('#timeline-container')).scope();
       $scope.$apply(function () {
         $scope.messages = JSON.parse(res).results;
       });
@@ -113,4 +113,10 @@ function SearchController($scope) {
 
   sock.onclose = function() {
   };
+})();
+
+(function bind_tabpane() {
+  $('.nav-tabs a').on('click', function() {
+    console.log('cc');
+  });
 })();

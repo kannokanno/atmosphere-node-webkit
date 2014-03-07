@@ -41,9 +41,14 @@
 	margin: auto;
 }
 
+#timeline-container {
+  padding-top: 10px;
+}
+
 .timeline {
 	border-bottom: 1px solid #e1e8ed;
 	margin-bottom: 10px;
+  padding: 5px 0;
 }
 
 .avatar {

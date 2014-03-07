@@ -35,15 +35,22 @@
                 </form>
             </div>
 
-            <div id="timeline-controller" ng-controller="TimelineController">
-                <div class="timeline" ng-repeat="message in messages">
-                    <img class="avatar" src="{{ avatarUrl(message) }}">
-                    <div class="timeline-header">
-                        <span class="message-by">{{ message.created_by }}</span>
-                        <small class="message-at">{{ message.created_at }}</small>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#global-timeline" data-toggle="tab">Global</a></li>
+                <li><a href="#talk-timeline" data-toggle="tab">Talk</a></li>
+                <li><a href="#private-timeline" data-toggle="tab">Private</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="timeline-container" ng-controller="TimelineController">
+                    <div class="timeline " ng-repeat="message in messages">
+                        <img class="avatar" src="{{ avatarUrl(message) }}">
+                        <div class="timeline-header">
+                            <span class="message-by">{{ message.created_by }}</span>
+                            <small class="message-at">{{ message.created_at }}</small>
+                        </div>
+                        <p class="message-body">{{ message.message }}</p>
+                        <div class="cf"></div>
                     </div>
-                    <p class="message-body">{{ message.message }}</p>
-                    <div class="cf"></div>
                 </div>
             </div>
         </section>
