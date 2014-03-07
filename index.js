@@ -4,10 +4,6 @@ var path = require('path');
 var util = require('util');
 var localStorage = localStorage || {};
 
-function make_path(added) {
-	return path.join('http://localhost:9999/', added);
-}
-
 var sessionId = {
 	set: function(id) {
 		localStorage.sessionId = id;
@@ -47,59 +43,55 @@ var http = {
 	}
 };
 
+function make_path(added) {
+    return path.join('', added);
+}
 
-(function bind_login() {
-	$('#login').on('click', function() {
-		http.post(
-			make_path('auth/login'),
-			util.format('{"user_id": "%s", "password": "%s"}', $('#login-id').val(), $('#login-password').val())
-		)
-		.done(function(res) {
-			if (JSON.parse(res).session_id) {
-				$('#entrance').css('display', 'none');
-				$('#content').show();
-			}
-		});
-	});
-})();
+function applyTimeline($promise) {
+    $promise
+        .done(function(res) {
+            var $scope = angular.element(('#timeline-controller')).scope();
+            $scope.$apply(function(){
+                $scope.messages = JSON.parse(res).results;
+            });
+        });
+}
 
-(function bind_search() {
-	$('#search').on('click', function() {
-		http.get(
-			make_path('/messages/search'),
-			util.format('keywords=%s', $('#search-text').val())
-		)
-		.done(function(res) {
-			console.log(JSON.parse(res));
-		});
-	});
-})();
+function LoginController($scope) {
+    $scope.login = function() {
+        http.post(
+                make_path('auth/login'),
+                util.format('{"user_id": "%s", "password": "%s"}', $scope.id, $scope.password)
+            )
+            .done(function(res) {
+                if (JSON.parse(res).session_id) {
+                    $('#entrance').css('display', 'none');
+                    $('#content').show();
+                    applyTimeline(http.get(make_path('messages/search'), util.format('count=%d', 50)));
+                }
+            });
+    }
+}
 
-(function bind_send() {
-	$('#send').on('click', function() {
-		http.post(
-			make_path('/messages/send'),
-			util.format('{"message": "%s", "reply_to": ""}', $('#send-text').val())
-		)
-		.done(function(res) {
-			console.log(JSON.parse(res));
-		});
-	});
-})();
-
-function timelineController($scope) {
-	// TODO タイミング
-	http.post(make_path('auth/login'), '{"user_id": "bob", "password": "bob"}')
-	.done(function() {
-		http.get(make_path('messages/search'), util.format('count=%d', 50))
-		.done(function(res) {
-			$scope.$apply(function(){
-				$scope.messages = JSON.parse(res).results;
-			});
-		});
-	});
-
+function SendController($scope) {
+    $scope.send = function() {
+        http.post(
+                make_path('/messages/send'),
+                util.format('{"message": "%s", "reply_to": ""}', $scope.message)
+            )
+            .done(function() {
+                applyTimeline(http.get(make_path('messages/search'), util.format('count=%d', 50)));
+            });
+    };
+}
+function TimelineController($scope) {
 	$scope.avatarUrl = function(message) {
 		return make_path('user/avator') + util.format('?user_id=%s', message.created_by);
 	};
+}
+
+function SearchController($scope) {
+    $scope.search = function() {
+        applyTimeline(http.get(make_path('/messages/search'), util.format('keywords=%s', $scope.keyword)));
+    }
 }
